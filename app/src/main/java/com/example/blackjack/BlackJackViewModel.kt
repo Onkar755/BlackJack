@@ -8,7 +8,7 @@ import com.example.blackjack.model.Card
 import com.example.blackjack.repository.CardRepository
 
 class BlackJackViewModel : ViewModel() {
-    private var index = 0;
+    private var index = 0
     private var cards = CardRepository.getCardList().shuffled()
 
     private val _dealerCards =
@@ -77,7 +77,6 @@ class BlackJackViewModel : ViewModel() {
         _isGameOn.value = false
     }
 
-    // Utility Functions
     private fun calculateScore(cards: List<Card>?): Int {
         return cards?.sumOf { it.score } ?: 0
     }
@@ -88,11 +87,6 @@ class BlackJackViewModel : ViewModel() {
             _dealerScore.value == _playerScore.value -> "Draw"
             else -> "Dealer Won"
         }
-    }
-
-    private fun checkGameOver() {
-        _result.value = if (_playerScore.value!! == 21) "You Won" else "Dealer Won"
-        _isGameOn.value = false
     }
 
     fun reInit() {

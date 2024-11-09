@@ -1,14 +1,10 @@
 package com.example.blackjack.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,8 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import com.example.blackjack.BlackJackViewModel
+import com.example.blackjack.ui.components.ControlButtons
 import com.example.blackjack.ui.components.PlayerBox
 import com.example.blackjack.ui.components.PopUpResult
 
@@ -36,44 +33,19 @@ fun MainScreen(viewModel: BlackJackViewModel, modifier: Modifier = Modifier) {
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         // Dealer
         PlayerBox(score = dealerScore, cards = dealerCards, player = "Dealer")
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Player
         PlayerBox(score = playerScore, cards = playerCards, player = "You")
 
-        // Control Buttons
-        Row(
-            modifier = modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Absolute.SpaceAround
-        ) {
-            Button(
-                onClick = {
-                    viewModel.playerHit()
-                    Log.d("MainActivity", "Hit Clicked - score: $playerScore")
-                },
-                enabled = isGameOn
-            ) {
-                Text(
-                    text = "Hit",
-                    fontSize = 18.sp
-                )
-            }
-            Button(
-                onClick = {
-                    viewModel.playerStay()
-                    Log.d("MainActivity", "Stay Clicked")
-                },
-                enabled = isGameOn
-            ) {
-                Text(
-                    text = "Stay",
-                    fontSize = 18.sp
-                )
-            }
-        }
+        ControlButtons(
+            isGameOn = isGameOn,
+            onHit = { viewModel.playerHit() },
+            onStay = { viewModel.playerStay() }
+        )
 
         if (!isGameOn) {
             PopUpResult(onDismissRequest = {

@@ -4,7 +4,7 @@ import com.example.blackjack.R
 import com.example.blackjack.model.Card
 
 object CardRepository {
-    public fun getCardList(): List<Card> {
+    fun getCardList(): List<Card> {
         return listOf(
             Card(
                 id = "c_a",
